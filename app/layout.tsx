@@ -1,11 +1,15 @@
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'//for auth 
 import { dark } from '@clerk/themes'
 import { ThemeProvider } from '@/components/ui/theme-provider'
+// ThemeProvider relies on the context feature of React to pass the theme down to the components, 
+// so you need to make sure that ThemeProvider is a parent of the components you are trying to customize.
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+// Next.js has a Metadata API that can be used to define your application metadata
+// (e.g. meta and link tags inside your HTML head element) for improved SEO
+import { Inter } from 'next/font/google' //font import
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] }) //type of the font
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,12 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
+    {/* setting base theme */}
       <html lang="en">
         <body className={inter.className}>
+        {/* //font for whole body */}
           <ThemeProvider
             attribute='class' forcedTheme='dark' storageKey='aletheia-theme'>
             {children}
           </ThemeProvider>
+              {/* //storageKey for local storage's name */}
         </body>
       </html>
     </ClerkProvider>

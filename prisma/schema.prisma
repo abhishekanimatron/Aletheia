@@ -4,11 +4,13 @@
 generator client {
   provider = "prisma-client-js"
 }
-
+//connected with neondb with postgresql using databse url from neondb
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+//Schema for user model
 
 model User{
   id String @id @default(uuid()) //unique id based on UUID
