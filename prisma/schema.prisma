@@ -17,7 +17,7 @@ model User{
   username String @unique
   imageUrl String @db.Text
   externalUserId String @unique //clerk uses this id
-  bio String @db.Text
+  bio String? @db.Text //? for "not required"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt //stores time when updated automatically
 }
