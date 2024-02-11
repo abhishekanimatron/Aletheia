@@ -1,6 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs'//for auth 
 import { dark } from '@clerk/themes'
-import { ThemeProvider } from '@/components/ui/theme-provider'
+import { ThemeProvider } from '@/components/theme-provider'
 // ThemeProvider relies on the context feature of React to pass the theme down to the components, 
 // so you need to make sure that ThemeProvider is a parent of the components you are trying to customize.
 import type { Metadata } from 'next'
