@@ -4,7 +4,7 @@ import { useSidebar } from "@/store/use_sidebar"
 // or not
 
 import { User } from "@prisma/client"
-import { UserItem } from "./user-item"
+import { UserItem, UserItemSkeleton } from "./user-item"
 
 //using npx prisma generate, we get the user with schema as we defined earlier
 interface RecommendedProps {
@@ -14,7 +14,7 @@ export const Recommended = ({
     data,
 }: RecommendedProps) => {
 
-    console.log(data.length)
+    // console.log(data.length)
     const { collapsed } = useSidebar((state) => state)
     // we show labels only when the sidebar isn't collapsed
     // and when there are users to show, i.e. data > 0  
@@ -33,5 +33,15 @@ export const Recommended = ({
                 ))}
             </ul>
         </div>
+    )
+}
+
+export const RecommendedSkeleton = () => {
+    return (
+        <ul className="px-2">
+            {[...Array(3)].map((_, i) => (
+                <UserItemSkeleton key={i} />
+            ))}
+        </ul>
     )
 }
