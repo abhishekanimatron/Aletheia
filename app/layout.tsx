@@ -7,6 +7,7 @@ import type { Metadata } from 'next'
 // Next.js has a Metadata API that can be used to define your application metadata
 // (e.g. meta and link tags inside your HTML head element) for improved SEO
 import { Inter } from 'next/font/google' //font import
+import { Toaster } from 'sonner'//for showing ui after user follows someone
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] }) //type of the font
@@ -24,15 +25,16 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       {/* clerk used for auth and user management */}
-    {/* setting base theme */}
+      {/* setting base theme */}
       <html lang="en">
         <body className={inter.className}>
-        {/* //font for whole body */}
+          {/* //font for whole body */}
           <ThemeProvider
             attribute='class' forcedTheme='dark' storageKey='aletheia-theme'>
+            <Toaster theme='light' position='bottom-center' />
             {children}
           </ThemeProvider>
-              {/* //storageKey for local storage's name */}
+          {/* //storageKey for local storage's name */}
         </body>
       </html>
     </ClerkProvider>
