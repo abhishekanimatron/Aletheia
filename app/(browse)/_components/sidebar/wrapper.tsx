@@ -20,6 +20,7 @@ export const Wrapper = ({
     useEffect(() => {
         setIsClient(true);
     }, [])
+    // rendering skeleton when the sidebar isn't loaded.
     if (!isClient) return (
         <aside className={cn("fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-background border-r border-[#2D2E35] z-50")}>
             <ToggleSkeleton />
@@ -27,6 +28,7 @@ export const Wrapper = ({
         </aside>
     );
     return (
+        //then load the children
         <aside className={cn("fixed left-0 flex flex-col w-60 h-full bg-background border-r border-[#2D2E35] z-50", collapsed && "w-[70px]")}>{children}</aside>
     )
 }

@@ -4,6 +4,7 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 //connected with neondb with postgresql using databse url from neondb
 datasource db {
   provider = "postgresql"
@@ -12,12 +13,35 @@ datasource db {
 
 //Schema for user model
 
-model User{
-  id String @id @default(uuid()) //unique id based on UUID
-  username String @unique
-  imageUrl String @db.Text
-  externalUserId String @unique //clerk uses this id
-  bio String? @db.Text //? for "not required"
+model User {
+  id             String  @id @default(uuid()) //unique id based on UUID
+  username       String  @unique
+  imageUrl       String  @db.Text
+  externalUserId String  @unique //clerk uses this id
+  bio            String? @db.Text //? for "not required"
+
+  following  Follow[] @relation("Following")
+  followedBy Follow[] @relation("FollowedBy")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt //stores time when updated automatically
+}
+
+model Follow {
+  id          String @id @default(uuid())
+  followerId  String
+  followingId String
+  //if the user gets deleted we also delete this relation
+  // needs to be on one line
+  follower    User   @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  //create unique combination using the two id's for faster queries
+  @@unique([followerId, followingId])
+  // defines index on model
+  @@index([followerId])
+  @@index([followingId])
 }
