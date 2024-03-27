@@ -1,6 +1,29 @@
 import { db } from "@/lib/db"
 import { getSelf } from "@/lib/auth-service"
 
+
+// action to get a list of followed users by a user
+// returns array
+export const getFollowedUsers = async () => {
+    try {
+        const self = await getSelf()
+        const followedUsers = db.follow.findMany({
+            where: {
+                followerId: self.id
+            },
+            //also include following so we can show the followed 
+            // users on the sidebar separately
+            include: {
+                following: true,
+            }
+        })
+        return followedUsers
+    } catch {
+        //returns empty array, if say the user isn't logged in
+        return []
+    }
+}
+
 // check to find whether the user is following the mentioned user
 //this will break for logged out users, telling they are not following anyone
 export const isFollowingUser = async (id: string) => {
@@ -73,6 +96,7 @@ export const followUser = async (id: string) => {
     return follow;
 }
 
+// action to unfollow user based on user id
 export const unfollowUser = async (id: string) => {
     const self = await getSelf()
 
