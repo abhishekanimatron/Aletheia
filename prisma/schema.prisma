@@ -23,6 +23,9 @@ model User {
   following  Follow[] @relation("Following")
   followedBy Follow[] @relation("FollowedBy")
 
+  blocking  Block[] @relation("Blocking")
+  blockedBy Block[] @relation("BlockedBy")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt //stores time when updated automatically
 }
@@ -38,10 +41,22 @@ model Follow {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   //create unique combination using the two id's for faster queries
   @@unique([followerId, followingId])
   // defines index on model
   @@index([followerId])
   @@index([followingId])
+}
+
+model Block {
+  id        String @id @default(uuid())
+  blockerId String
+  blockedId String
+  blocker   User   @relation(name: "Blocking", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User   @relation(name: "BlockedBy", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@unique([blockedId,blockerId])
+  @@index([blockerId])
+  @@index([blockedId])
 }
