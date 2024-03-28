@@ -52,7 +52,7 @@ export const Actions = ({ isFollowing, userId }: ActionProps) => {
                 {isFollowing ? "Unfollow" : "Follow"}
             </Button>
             <Button onClick={handleBlock} disabled={isPending}>
-                Unblock
+                Block
             </Button>
         </>
     )
